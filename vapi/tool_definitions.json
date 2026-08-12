@@ -1,0 +1,145 @@
+{
+  "tools": [
+    {
+      "name": "verify_customer",
+      "description": "Verify the customer's identity before any protected loan or overdue information is disclosed.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "Customer loan account ID, for example ACC88392."
+          },
+          "verification_code": {
+            "type": "string",
+            "description": "Customer verification code."
+          }
+        },
+        "required": [
+          "account_id",
+          "verification_code"
+        ]
+      }
+    },
+    {
+      "name": "log_promise_to_pay",
+      "description": "Record a confirmed Promise to Pay after the customer clearly confirms the payment amount and date.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "Customer loan account ID."
+          },
+          "ptp_date": {
+            "type": "string",
+            "description": "Confirmed future payment date in YYYY-MM-DD format."
+          },
+          "amount": {
+            "type": "number",
+            "description": "Confirmed payment amount in Indian rupees."
+          }
+        },
+        "required": [
+          "account_id",
+          "ptp_date",
+          "amount"
+        ]
+      }
+    },
+    {
+      "name": "send_payment_link",
+      "description": "Send a payment link to the customer's registered contact through the requested channel.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "Customer loan account ID."
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "SMS",
+              "WhatsApp",
+              "BOTH"
+            ],
+            "description": "Channel through which the payment link should be sent."
+          }
+        },
+        "required": [
+          "account_id",
+          "channel"
+        ]
+      }
+    },
+    {
+      "name": "escalate_to_agent",
+      "description": "Escalate a customer case to a human agent when the issue requires human review or the customer requests human assistance.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "Customer loan account ID."
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "HARDSHIP_REQUEST",
+              "DISPUTE",
+              "ALREADY_PAID",
+              "UNRECOGNIZED_DEBT",
+              "CUSTOMER_REQUESTED_HUMAN_AGENT",
+              "OTHER"
+            ],
+            "description": "Reason for escalating the customer."
+          }
+        },
+        "required": [
+          "account_id",
+          "reason"
+        ]
+      }
+    },
+    {
+      "name": "mark_disposition",
+      "description": "Record the final outcome of the completed collections conversation.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "Customer loan account ID."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PROMISE_TO_PAY",
+              "PAYMENT_LINK_SENT",
+              "HARDSHIP_REQUEST",
+              "DISPUTE",
+              "ALREADY_PAID",
+              "UNRECOGNIZED_DEBT",
+              "WRONG_PERSON",
+              "DO_NOT_CALL",
+              "CALLBACK_REQUEST",
+              "ESCALATED",
+              "NO_CONTACT"
+            ],
+            "description": "Final disposition of the conversation."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Short notes describing the final outcome."
+          }
+        },
+        "required": [
+          "account_id",
+          "status",
+          "notes"
+        ]
+      }
+    }
+  ]
+}
