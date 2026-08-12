@@ -114,7 +114,7 @@ Inputs:
 Purpose:
 Records the final outcome of the call.
 
-The complete JSON schemas are in `vapi_tool_schemas.json`.
+The complete JSON schemas are in `vapi/tool_definitions.json`.
 
 ## 6. Guardrails and compliance
 
